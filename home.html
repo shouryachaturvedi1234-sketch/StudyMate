@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StudyMate — Home</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #00ffff;
+    --secondary: #ff4655;
+    --accent: #facc15;
+    --bg1: #000010;
+    --muted: #a1a1aa;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+  }
+
+  body {
+    background: radial-gradient(circle at top, #0a0a1a, #000);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 60px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    letter-spacing: 2px;
+  }
+
+  .hero {
+    text-align: center;
+    padding: 120px 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+  }
+
+  .hero p {
+    color: var(--muted);
+    max-width: 700px;
+    margin: 20px auto 40px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .btn {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border: none;
+    color: white;
+    border-radius: 10px;
+    padding: 14px 32px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px var(--primary);
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 80px;
+  }
+
+  .glow1, .glow2 {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.4;
+    z-index: 0;
+    animation: float 8s ease-in-out infinite alternate;
+  }
+
+  .glow1 {
+    background: var(--secondary);
+    width: 400px;
+    height: 400px;
+    top: 10%;
+    left: 10%;
+  }
+
+  .glow2 {
+    background: var(--primary);
+    width: 400px;
+    height: 400px;
+    bottom: 10%;
+    right: 10%;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-30px); }
+  }
+
+  @media (max-width: 768px) {
+    header {
+      flex-direction: column;
+      gap: 12px;
+    }
+    .hero h1 {
+      font-size: 2.3rem;
+    }
+    .hero p {
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo-text">StudyMate</div>
+</header>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<section class="hero">
+  <h1>Level Up Your Study Game ⚡</h1>
+  <p>Welcome to <strong>StudyMate</strong> — your personal hub for focused study sessions, leaderboard battles, and motivational tracking. Compete, chat, and conquer your goals with style.</p>
+  <button class="btn" onclick="window.location.href='dashboard.html'">Get Started</button>
+</section>
+
+<footer>
+  © 2025 StudyMate — Focus. Compete. Achieve.
+</footer>
+
+</body>
+</html>

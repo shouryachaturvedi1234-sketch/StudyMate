@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Study Buddy — Leaderboard</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary:#00ffff;
+    --secondary:#ff4655;
+    --accent:#facc15;
+    --bg1:#000010;
+    --card-bg:rgba(255,255,255,0.08);
+    --muted:#a1a1aa;
+  }
+
+  *{
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+    margin:0;
+    padding:0;
+  }
+
+  body{
+    background:radial-gradient(circle at top,#0a0a1a,#000);
+    color:#f9fafb;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 60px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    position:relative;
+    z-index:2;
+  }
+
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .logo img{
+    height:60px;
+    border-radius:8px;
+    box-shadow:0 0 15px var(--secondary);
+  }
+
+  h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:1.8rem;
+    background:linear-gradient(90deg,var(--secondary),var(--primary));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+
+  .dashboard-btn{
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+    border:none;
+    border-radius:10px;
+    padding:10px 20px;
+    color:white;
+    font-weight:700;
+    font-family:'Orbitron',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:all 0.25s ease;
+  }
+  .dashboard-btn:hover{
+    box-shadow:0 0 20px var(--primary);
+    transform:scale(1.05);
+  }
+
+  /* Neon glowing background elements */
+  .glow1, .glow2{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:0.4;
+    animation:float 10s ease-in-out infinite alternate;
+    z-index:0;
+  }
+  .glow1{
+    background:var(--secondary);
+    top:15%;
+    left:5%;
+    width:400px;
+    height:400px;
+  }
+  .glow2{
+    background:var(--primary);
+    bottom:5%;
+    right:5%;
+    width:350px;
+    height:350px;
+  }
+  @keyframes float{
+    0%{transform:translateY(0)}
+    100%{transform:translateY(-40px)}
+  }
+
+  main{
+    padding:60px 20px;
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .leaderboard-container{
+    max-width:700px;
+    width:100%;
+    background:var(--card-bg);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 30px rgba(255,255,255,0.05);
+    padding:30px;
+    text-align:center;
+  }
+
+  .leaderboard-container h2{
+    font-family:'Orbitron',sans-serif;
+    color:var(--accent);
+    margin-bottom:20px;
+    letter-spacing:1px;
+    font-size:1.6rem;
+  }
+
+  .search-bar{
+    margin-bottom:20px;
+    display:flex;
+    gap:8px;
+    justify-content:center;
+  }
+
+  .search-bar input{
+    width:70%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.05);
+    color:white;
+    font-size:1rem;
+  }
+
+  .search-bar button{
+    background:linear-gradient(90deg,var(--secondary),var(--primary));
+    border:none;
+    color:white;
+    border-radius:8px;
+    padding:10px 16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+
+  .search-bar button:hover{
+    box-shadow:0 0 15px var(--primary);
+    transform:scale(1.05);
+  }
+
+  .user{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:14px 18px;
+    border-radius:12px;
+    margin-bottom:10px;
+    transition:all 0.2s ease;
+  }
+
+  .user:hover{
+    background:rgba(255,255,255,0.12);
+    transform:scale(1.02);
+    box-shadow:0 0 15px rgba(255,255,255,0.08);
+  }
+
+  .highlight{
+    box-shadow:0 0 25px var(--accent);
+    transform:scale(1.05);
+    border:1px solid var(--accent);
+  }
+
+  .rank{
+    font-family:'Orbitron',sans-serif;
+    font-weight:700;
+    color:var(--primary);
+  }
+
+  .username{
+    font-weight:600;
+    color:#fff;
+  }
+
+  .score{
+    color:var(--accent);
+    font-family:'Orbitron',sans-serif;
+  }
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    padding:20px;
+    margin-top:40px;
+    font-size:0.9rem;
+    border-top:1px solid rgba(255,255,255,0.1);
+  }
+
+  @media(max-width:700px){
+    header{padding:20px;}
+    .logo img{height:48px;}
+    .search-bar input{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Study Buddy Logo">
+    <h1>Leaderboard</h1>
+  </div>
+  <button class="dashboard-btn" onclick="window.location.href='dashboard.html'">Dashboard</button>
+</header>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<main>
+  <div class="leaderboard-container">
+    <h2>🔥 Weekly Top Performers</h2>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search for your name...">
+      <button onclick="searchUser()">Search</button>
+    </div>
+
+    <div id="leaderboard-list">
+      <!-- Leaderboard dynamically rendered here -->
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2025 Study Buddy — Compete. Conquer. Rise. ⚡
+</footer>
+
+<script>
+// Example leaderboard data
+const leaderboardData = [
+  { name: "Aarav Sharma", minutes: 980 },
+  { name: "Isha Patel", minutes: 910 },
+  { name: "Rohan Das", minutes: 865 },
+  { name: "Tanya Mehra", minutes: 780 },
+  { name: "Kabir Singh", minutes: 720 },
+  { name: "Neha Verma", minutes: 680 },
+  { name: "Sarthak Goel", minutes: 650 },
+  { name: "Mehul Jain", minutes: 620 },
+  { name: "Priya Gupta", minutes: 590 },
+  { name: "Kiran Yadav", minutes: 570 }
+];
+
+const leaderboardList = document.getElementById('leaderboard-list');
+
+function renderLeaderboard(list){
+  leaderboardList.innerHTML = '';
+  list.forEach((user, index) => {
+    const div = document.createElement('div');
+    div.className = 'user';
+    div.innerHTML = `
+      <div class="rank">#${index + 1}</div>
+      <div class="username">${user.name}</div>
+      <div class="score">${user.minutes} min</div>
+    `;
+    leaderboardList.appendChild(div);
+  });
+}
+
+renderLeaderboard(leaderboardData);
+
+function searchUser(){
+  const query = document.getElementById('search').value.trim().toLowerCase();
+  const users = document.querySelectorAll('.user');
+  let found = false;
+
+  users.forEach(u => {
+    u.classList.remove('highlight');
+    const name = u.querySelector('.username').textContent.toLowerCase();
+    if(name.includes(query) && query !== ''){
+      u.classList.add('highlight');
+      u.scrollIntoView({behavior:'smooth', block:'center'});
+      found = true;
+    }
+  });
+
+  if(!found && query !== ''){
+    alert("User not found on leaderboard!");
+  }
+}
+</script>
+
+</body>
+</html>

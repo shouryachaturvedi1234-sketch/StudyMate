@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Study Buddy — Study Sessions</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary:#00ffff;
+    --secondary:#ff4655;
+    --accent:#facc15;
+    --bg1:#000010;
+    --card-bg:rgba(255,255,255,0.07);
+    --muted:#a1a1aa;
+  }
+
+  * {
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:'Inter',sans-serif;
+  }
+
+  body {
+    background:radial-gradient(circle at top,#111827,#000);
+    color:#f9fafb;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 60px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    z-index:10;
+  }
+
+  .logo {
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .logo img {
+    height:60px;
+    border-radius:8px;
+    box-shadow:0 0 15px var(--secondary);
+  }
+
+  h1 {
+    font-family:'Orbitron',sans-serif;
+    font-size:1.8rem;
+    background:linear-gradient(90deg,var(--secondary),var(--primary));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+
+  .dashboard-btn {
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+    border:none;
+    border-radius:10px;
+    padding:10px 20px;
+    color:white;
+    font-weight:700;
+    font-family:'Orbitron',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+  .dashboard-btn:hover {
+    box-shadow:0 0 20px var(--primary);
+    transform:scale(1.05);
+  }
+
+  .glow1, .glow2 {
+    position:absolute;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:0.4;
+    animation: float 10s ease-in-out infinite alternate;
+    z-index:0;
+  }
+  .glow1 {
+    background:var(--secondary);
+    top:15%;
+    left:5%;
+    width:400px;
+    height:400px;
+  }
+  .glow2 {
+    background:var(--primary);
+    bottom:5%;
+    right:5%;
+    width:350px;
+    height:350px;
+  }
+  @keyframes float {
+    0%{transform:translateY(0)}
+    100%{transform:translateY(-40px)}
+  }
+
+  main {
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:40px 20px;
+  }
+
+  .card {
+    background:var(--card-bg);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:16px;
+    padding:24px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 25px rgba(255,255,255,0.05);
+    max-width:480px;
+    width:100%;
+    text-align:center;
+  }
+
+  .card h2 {
+    font-family:'Orbitron',sans-serif;
+    color:var(--accent);
+    margin-bottom:20px;
+  }
+
+  .timer {
+    font-family:'Orbitron',sans-serif;
+    font-size:2rem;
+    margin:10px 0 20px;
+    color:var(--primary);
+  }
+
+  .timer-controls button {
+    background:linear-gradient(90deg,var(--secondary),var(--primary));
+    border:none;
+    border-radius:10px;
+    padding:10px 16px;
+    margin:5px;
+    color:white;
+    font-weight:600;
+    font-family:'Orbitron',sans-serif;
+    cursor:pointer;
+    transition:all 0.2s ease;
+  }
+  .timer-controls button:hover {
+    transform:scale(1.05);
+    box-shadow:0 0 20px var(--primary);
+  }
+
+  label {
+    display:block;
+    text-align:left;
+    margin-bottom:6px;
+    font-weight:600;
+    font-size:0.9rem;
+    color:var(--primary);
+  }
+
+  input {
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.05);
+    color:#fff;
+    font-size:1rem;
+    margin-bottom:16px;
+  }
+
+  .btn {
+    background:linear-gradient(90deg,var(--secondary),var(--primary));
+    color:white;
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-family:'Orbitron',sans-serif;
+    transition:all 0.2s ease;
+  }
+
+  .btn:hover {
+    box-shadow:0 0 20px var(--secondary);
+    transform:scale(1.05);
+  }
+
+  .result-box {
+    margin-top:20px;
+    background:rgba(255,255,255,0.08);
+    padding:16px;
+    border-radius:12px;
+    display:none;
+  }
+
+  .result-box h3 {
+    color:var(--accent);
+    font-family:'Orbitron',sans-serif;
+  }
+
+  .result-box p {
+    color:#e2e8f0;
+    margin-top:6px;
+    font-size:0.95rem;
+  }
+
+  footer {
+    text-align:center;
+    color:var(--muted);
+    padding:20px;
+    font-size:0.85rem;
+    border-top:1px solid rgba(255,255,255,0.1);
+    margin-top:40px;
+  }
+
+  @media(max-width:700px){
+    header{padding:20px;}
+    .logo img{height:48px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Study Buddy Logo">
+    <h1>Study Sessions</h1>
+  </div>
+  <button class="dashboard-btn" onclick="window.location.href='dashboard.html'">Dashboard</button>
+</header>
+
+<div class="glow1"></div>
+<div class="glow2"></div>
+
+<main>
+  <div class="card">
+    <h2>🎯 Start Your Study Mission</h2>
+
+    <!-- TIMER -->
+    <div class="timer" id="timer">00:00:00</div>
+    <div class="timer-controls">
+      <button onclick="startTimer()">Start</button>
+      <button onclick="pauseTimer()">Pause</button>
+      <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <!-- INPUT SECTION -->
+    <label for="questions">Questions Attempted</label>
+    <input type="number" id="questions" placeholder="e.g. 50" min="1">
+
+    <label for="correct">Correct Answers</label>
+    <input type="number" id="correct" placeholder="e.g. 42" min="0">
+
+    <button class="btn" onclick="calculatePerformance()">Evaluate Performance</button>
+
+    <div class="result-box" id="result-box">
+      <h3>📊 Session Summary</h3>
+      <p id="accuracy"></p>
+      <p id="speed"></p>
+      <p id="feedback"></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2025 Study Buddy — Focus. Compete. Evolve. ⚡
+</footer>
+
+<script>
+let timerInterval;
+let seconds = 0;
+
+function startTimer(){
+  if(timerInterval) return;
+  timerInterval = setInterval(()=>{
+    seconds++;
+    document.getElementById("timer").textContent = formatTime(seconds);
+  },1000);
+}
+
+function pauseTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+}
+
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  seconds = 0;
+  document.getElementById("timer").textContent = "00:00:00";
+}
+
+function formatTime(sec){
+  let h = Math.floor(sec / 3600);
+  let m = Math.floor((sec % 3600) / 60);
+  let s = sec % 60;
+  return [h,m,s].map(v => v.toString().padStart(2,'0')).join(":");
+}
+
+function calculatePerformance(){
+  const q = parseInt(document.getElementById("questions").value);
+  const c = parseInt(document.getElementById("correct").value);
+  const box = document.getElementById("result-box");
+
+  if(!q || c < 0 || c > q){
+    alert("Please enter valid numbers for all fields!");
+    return;
+  }
+
+  const minutes = seconds / 60 || 1; // avoid divide by zero
+  const accuracy = ((c / q) * 100).toFixed(1);
+  const speed = (q / minutes).toFixed(2);
+  let feedback = "";
+
+  if(accuracy >= 90){
+    feedback = "🔥 Outstanding accuracy! You’re dominating this mission.";
+  } else if(accuracy >= 70){
+    feedback = "⚡ Great job! Keep sharpening your focus.";
+  } else {
+    feedback = "💪 Stay determined! Every round improves your aim.";
+  }
+
+  document.getElementById("accuracy").innerText = `Accuracy: ${accuracy}%`;
+  document.getElementById("speed").innerText = `Speed: ${speed} questions/minute`;
+  document.getElementById("feedback").innerText = feedback;
+  box.style.display = "block";
+}
+</script>
+
+</body>
+</html>
